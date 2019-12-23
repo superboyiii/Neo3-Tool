@@ -48,9 +48,15 @@ namespace Decoding
         private static bool OnHelpCommand()
         {
             Console.WriteLine("Command List:");
-            Console.WriteLine("\tBase64ByteArrayToAddress [base64ByteArray] 输入base64的ByteArray转换成Neo3标准地址");
-            Console.WriteLine("\tBase64ByteArrayToBigInteger [base64ByteArray] 输入base64的ByteArray转换成BigInteger");
-            Console.WriteLine("\tAddressToScriptHash [standardAddress] 输入标准地址转成大小端序的script hash");
+            Console.Write("\tBase64ByteArrayToAddress [base64ByteArray] ");
+            Console.SetCursorPosition(60, Console.CursorTop);
+            Console.WriteLine("输入base64的ByteArray转换成Neo3标准地址");
+            Console.Write("\tBase64ByteArrayToBigInteger [base64ByteArray] ");
+            Console.SetCursorPosition(60, Console.CursorTop);
+            Console.WriteLine("输入base64的ByteArray转换成BigInteger");
+            Console.Write("\tAddressToScriptHash [standardAddress] ");
+            Console.SetCursorPosition(60, Console.CursorTop);
+            Console.WriteLine("输入标准地址转成大小端序的script hash");
             return OnCommand();
         }
 
@@ -63,13 +69,13 @@ namespace Decoding
             var scripthash = UInt160.Parse(hex);
             String address = Neo.Wallets.Helper.ToAddress(scripthash);
             Console.WriteLine("Hex: " + hex);
-            Console.WriteLine("Standard Address:" + address);
+            Console.WriteLine("Standard Address: " + address);
             return OnCommand();
         }
 
         private static bool Base64ByteArrayToBiginteger(string[] args)
         {
-            /*String value = "UQ ==";*/
+            /*String value = "AADBb/KGIw==";*/
             String value = args[1];
             byte[] result = Convert.FromBase64String(value).Reverse().ToArray();
             String hex = result.ToHexString();
