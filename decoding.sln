@@ -5,10 +5,6 @@ VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DecodingTool", "decoding\DecodingTool.csproj", "{FA865B32-4BF0-46A3-905B-7594F407D04D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "neo", "neo\src\neo\neo.csproj", "{1745F9D1-C868-44CD-A531-918670BED003}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "neo-vm", "neo-vm\src\neo-vm\neo-vm.csproj", "{3FB8BE7C-260E-4280-A8F1-0267D0200E48}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,14 +15,6 @@ Global
 		{FA865B32-4BF0-46A3-905B-7594F407D04D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA865B32-4BF0-46A3-905B-7594F407D04D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA865B32-4BF0-46A3-905B-7594F407D04D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1745F9D1-C868-44CD-A531-918670BED003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1745F9D1-C868-44CD-A531-918670BED003}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1745F9D1-C868-44CD-A531-918670BED003}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1745F9D1-C868-44CD-A531-918670BED003}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3FB8BE7C-260E-4280-A8F1-0267D0200E48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3FB8BE7C-260E-4280-A8F1-0267D0200E48}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3FB8BE7C-260E-4280-A8F1-0267D0200E48}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3FB8BE7C-260E-4280-A8F1-0267D0200E48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
