@@ -56,6 +56,8 @@ namespace Decoding
                     return LittleEndScriptHashToAddress(args);
                 case "bigendscripthashtoaddress":
                     return BigEndScriptHashToAddress(args);
+                case "bigandlittleendexchange":
+                    return BigAndLittleEndExchange(args);
                 default:
                     Console.WriteLine("error: command not found ");
                     Console.WriteLine();
@@ -93,6 +95,9 @@ namespace Decoding
             Console.Write("\tBigEndScriptHashToAddress [bigEndScriptHash] ");
             Console.SetCursorPosition(70, Console.CursorTop);
             Console.WriteLine("输入大端序的script hash转换成地址");
+            Console.Write("\tBigAndLittleEndExchange [scriptHash(bigEnd or littleEnd)] ");
+            Console.SetCursorPosition(70, Console.CursorTop);
+            Console.WriteLine("script hash大小端序互换");
             Console.WriteLine();
             return OnCommand();
         }
@@ -183,6 +188,14 @@ namespace Decoding
             UInt160 scriptHash = UInt160.Parse(args[1]);
             String address = Neo.Wallets.Helper.ToAddress(scriptHash);
             Console.WriteLine("Standard Address: " + address);
+            Console.WriteLine();
+            return OnCommand();
+        }
+
+        private static bool BigAndLittleEndExchange(string[] args)
+        {
+            String reverse = args[1].HexToBytes().Reverse().ToArray().ToHexString();
+            Console.WriteLine("LitteleEnd <=> BigEnd: " + reverse);
             Console.WriteLine();
             return OnCommand();
         }
