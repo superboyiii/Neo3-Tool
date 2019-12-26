@@ -13,4 +13,4 @@ Neo3 Decoding Tool
 `AddressToScriptHash [standardAddress]`:&nbsp;&nbsp;Convert `Neo3 Standard Address` to `Big&Little End Scripthash`.<br>
 `LittleEndScriptHashToAddress [littleEndScriptHash]`:&nbsp;&nbsp;Convert `LittleEndScriptHash` to `Standard Address`.<br>
 `BigEndScriptHashToAddress [bigEndScriptHash]`:&nbsp;&nbsp;Convert `BigEndScriptHash` to `Standard Address`.<br>
-`BigAndLittleEndExchange [scriptHash(bigEnd or littleEnd)]`::&nbsp;&nbsp;LittleEnd and BigEnd hex swap<br>
+`BigAndLittleEndExchange [scriptHash(bigEnd or littleEnd)]`:&nbsp;&nbsp;LittleEnd and BigEnd hex swap<br>
