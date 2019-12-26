@@ -2,13 +2,9 @@
 using System.Linq;
 using Neo;
 using Neo.IO;
-using static Neo.Helper;
-using Neo.Ledger;
-using Neo.SmartContract;
-using Neo.SmartContract.Native;
-using Neo.VM;
-using Neo.Wallets;
 using System.Numerics;
+
+/*This is a tool for NEO3 data convert*/
 
 namespace Decoding
 {
@@ -20,6 +16,7 @@ namespace Decoding
             Console.WriteLine("Neo3 Decoding Tool v1.0.0");
             Console.WriteLine();
             Console.WriteLine("Input [help] to see details.");
+            Console.WriteLine();
             OnCommand();
         }
         protected static bool OnCommand()
@@ -46,6 +43,8 @@ namespace Decoding
                     return HexNumberToBigInteger(args);
                 case "bigintegertohexnumber":
                     return BigIntegerToHexNumber(args);
+                case "base64hexstringtostring":
+                    return Base64HexStringToString(args);
                 case "base64bytearraytoaddress":
                     return Base64ByteArrayToAddress(args);
                 case "base64bytearraytobiginteger":
@@ -77,9 +76,12 @@ namespace Decoding
             Console.Write("\tHexNumberToBigInteger [hex] ");
             Console.SetCursorPosition(70, Console.CursorTop);
             Console.WriteLine("输入HexNumber转换成BigInteger");
-            Console.Write("\tBigIntegerToHexNumber [BigInteger] ");
+            Console.Write("\tBigIntegerToHexNumber [bigInteger] ");
             Console.SetCursorPosition(70, Console.CursorTop);
             Console.WriteLine("输入BigInteger转换成HexNumber");
+            Console.Write("\tBase64HexStringToString [base64HexString] ");
+            Console.SetCursorPosition(70, Console.CursorTop);
+            Console.WriteLine("输入Base64HexString转换成String");
             Console.Write("\tBase64ByteArrayToAddress [base64ByteArray] ");
             Console.SetCursorPosition(70, Console.CursorTop);
             Console.WriteLine("输入base64的ByteArray转换成Neo3标准地址");
@@ -104,98 +106,192 @@ namespace Decoding
 
         private static bool HexStringToString(string[] args)
         {
-            Console.WriteLine(System.Text.Encoding.ASCII.GetString(args[1].HexToBytes()));
+            //String args[1] = "7472616e73666572";
+            try
+            {
+                Console.WriteLine(System.Text.Encoding.ASCII.GetString(args[1].HexToBytes()));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {Environment.NewLine}{e.Message}");
+            }
             Console.WriteLine();
             return OnCommand();
         }
 
         private static bool StringToHexString(string[] args)
         {
-            Console.WriteLine((System.Text.Encoding.ASCII.GetBytes(args[1])).ToHexString());
+            //String args[1] = "Transfer";
+            try
+            {
+                Console.WriteLine((System.Text.Encoding.ASCII.GetBytes(args[1])).ToHexString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {Environment.NewLine}{e.Message}");
+            }
             Console.WriteLine();
             return OnCommand();
         }
 
         private static bool HexNumberToBigInteger(string[] args)
         {
-            String bigEnd = args[1].HexToBytes().Reverse().ToArray().ToHexString();
-            Console.WriteLine(System.Numerics.BigInteger.Parse(bigEnd, System.Globalization.NumberStyles.HexNumber));
+            //String args[1] = "00c2eb0b";
+            try
+            {
+                String bigEnd = args[1].HexToBytes().Reverse().ToArray().ToHexString();
+                Console.WriteLine(System.Numerics.BigInteger.Parse(bigEnd, System.Globalization.NumberStyles.HexNumber));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {Environment.NewLine}{e.Message}");
+            }
             Console.WriteLine();
             return OnCommand();
         }
 
         private static bool BigIntegerToHexNumber(string[] args)
         {
-            String bigEndHex = BigInteger.Parse(args[1]).ToByteArray().ToHexString();
-            String littleEndHex = bigEndHex.HexToBytes().Reverse().ToArray().ToHexString();
-            Console.WriteLine("BigEnd: " + bigEndHex);
-            Console.WriteLine("LittleEnd: " + littleEndHex);
+            //String args[1] = "100000000";
+            try
+            {
+                String bigEndHex = BigInteger.Parse(args[1]).ToByteArray().ToHexString();
+                String littleEndHex = bigEndHex.HexToBytes().Reverse().ToArray().ToHexString();
+                Console.WriteLine("BigEnd: " + bigEndHex);
+                Console.WriteLine("LittleEnd: " + littleEndHex);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {Environment.NewLine}{e.Message}");
+            }
+            Console.WriteLine();
+            return OnCommand();
+        }
+
+        private static bool Base64HexStringToString(string[] args)
+        {
+            //String args[1] = "VHJhbnNmZXI=";
+            try
+            {
+                Console.WriteLine(System.Text.Encoding.ASCII.GetString(Convert.FromBase64String(args[1])));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {Environment.NewLine}{e.Message}");
+            }
             Console.WriteLine();
             return OnCommand();
         }
 
         private static bool Base64ByteArrayToAddress(string[] args)
         {
-            /*String value = "0wzwBoLXDacAgxEkGaxxo1Ezxh4=";*/
+            //String args[1] = "0wzwBoLXDacAgxEkGaxxo1Ezxh4=";
             String value = args[1];
-            byte[] result = Convert.FromBase64String(value).Reverse().ToArray();
-            String hex = result.ToHexString();
-            var scripthash = UInt160.Parse(hex);
-            String address = Neo.Wallets.Helper.ToAddress(scripthash);
-            Console.WriteLine("Hex: " + hex);
-            Console.WriteLine("Standard Address: " + address);
+            try
+            {
+                byte[] result = Convert.FromBase64String(value).Reverse().ToArray();
+                String hex = result.ToHexString();
+                var scripthash = UInt160.Parse(hex);
+                String address = Neo.Wallets.Helper.ToAddress(scripthash);
+                Console.WriteLine("Hex: " + hex);
+                Console.WriteLine("Standard Address: " + address);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {Environment.NewLine}{e.Message}");
+            }
+            Console.WriteLine();
             return OnCommand();
         }
 
         private static bool Base64ByteArrayToBigInteger(string[] args)
         {
-            /*String value = "AADBb/KGIw==";*/
+            //String args[1] = "AADBb/KGIw==";
             String value = args[1];
-            byte[] result = Convert.FromBase64String(value).Reverse().ToArray();
-            String hex = result.ToHexString();
-            var number = System.Numerics.BigInteger.Parse(hex, System.Globalization.NumberStyles.AllowHexSpecifier);
-            Console.WriteLine("Hex: " + hex);
-            Console.WriteLine("BigInteger number:" + number);
+            try
+            {
+                String littleEnd = Convert.FromBase64String(value).ToArray().ToHexString();
+                String bigEnd = Convert.FromBase64String(value).Reverse().ToArray().ToHexString();
+                var number = System.Numerics.BigInteger.Parse(bigEnd, System.Globalization.NumberStyles.AllowHexSpecifier);
+                Console.WriteLine("LittleEnd: " + littleEnd);
+                Console.WriteLine("BigEnd: " + bigEnd);
+                Console.WriteLine("BigInteger number:" + number);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {Environment.NewLine}{e.Message}");
+            }
+            Console.WriteLine();
             return OnCommand();
         }
 
         private static bool AddressToScriptHash(string[] args)
         {
-            /*String value = "NeHNBbeLNtiCEeaFQ6tLLpXkr5Xw6esKnV";*/
+            //String args[1] = "NeHNBbeLNtiCEeaFQ6tLLpXkr5Xw6esKnV";
             String address = args[1];
-            UInt160 bigEnd = Neo.Wallets.Helper.ToScriptHash(address);
-            String littleEnd = bigEnd.ToArray().ToHexString();
-            Console.WriteLine("BigEnd: " + bigEnd);
-            Console.WriteLine("LittleEnd: " + littleEnd);
-            //Console.WriteLine(Convert.ToBase64String("02ea3566fecd303f7775292f242be14c778d59c9ea32439e26a8f141b621cc6406".HexToBytes()));
+            try
+            {
+                UInt160 bigEnd = Neo.Wallets.Helper.ToScriptHash(address);
+                String littleEnd = bigEnd.ToArray().ToHexString();
+                Console.WriteLine("BigEnd: " + bigEnd);
+                Console.WriteLine("LittleEnd: " + littleEnd);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {Environment.NewLine}{e.Message}");
+            }
             Console.WriteLine();
             return OnCommand();
         }
 
         private static bool LittleEndScriptHashToAddress(string[] args)
         {
-            UInt160 littleEnd = UInt160.Parse(args[1]);
-            String bigEnd = littleEnd.ToArray().ToHexString();
-            UInt160 scriptHash = UInt160.Parse(bigEnd); 
-            String address = Neo.Wallets.Helper.ToAddress(scriptHash);
-            Console.WriteLine("Standard Address: " + address);
+            //String args[1] = "c97e324bac15a4ea589f423e4b29a7210b8fad09";
+            try
+            {
+                UInt160 littleEnd = UInt160.Parse(args[1]);
+                String bigEnd = littleEnd.ToArray().ToHexString();
+                UInt160 scriptHash = UInt160.Parse(bigEnd);
+                String address = Neo.Wallets.Helper.ToAddress(scriptHash);
+                Console.WriteLine("Standard Address: " + address);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"Error: {Environment.NewLine}{e.Message}");
+            }
             Console.WriteLine();
             return OnCommand();
         }
 
         private static bool BigEndScriptHashToAddress(string[] args)
         {
+            //String args[1] = "0x09ad8f0b21a7294b3e429f58eaa415ac4b327ec9";
             UInt160 scriptHash = UInt160.Parse(args[1]);
-            String address = Neo.Wallets.Helper.ToAddress(scriptHash);
-            Console.WriteLine("Standard Address: " + address);
+            try
+            {
+                String address = Neo.Wallets.Helper.ToAddress(scriptHash);
+                Console.WriteLine("Standard Address: " + address);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {Environment.NewLine}{e.Message}");
+            }
             Console.WriteLine();
             return OnCommand();
         }
 
         private static bool BigAndLittleEndExchange(string[] args)
         {
-            String reverse = args[1].HexToBytes().Reverse().ToArray().ToHexString();
-            Console.WriteLine("LitteleEnd <=> BigEnd: " + reverse);
+            //String args[1] = "c97e324bac15a4ea589f423e4b29a7210b8fad09";
+            try
+            {
+                String reverse = args[1].HexToBytes().Reverse().ToArray().ToHexString();
+                Console.WriteLine("LitteleEnd <=> BigEnd: " + reverse);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {Environment.NewLine}{e.Message}");
+            }
             Console.WriteLine();
             return OnCommand();
         }
